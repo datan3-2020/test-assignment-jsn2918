@@ -1,7 +1,7 @@
 Test statistical assignment
 ================
-Alexey Bessudnov
-22 January 2020
+Jenson Wong
+27 January 2020
 
 Introduction
 ------------

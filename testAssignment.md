@@ -33,7 +33,6 @@ library(tidyverse)
     ## x dplyr::lag()    masks stats::lag()
 
 ``` r
-# This attaches the tidyverse package. If you get an error here you need to install the package first. 
 d <- read_tsv("/Users/jsn2817/Downloads/UKDA-6614-tab/tab/ukhls_w9/i_youth.tab")
 ```
 
@@ -44,10 +43,6 @@ d <- read_tsv("/Users/jsn2817/Downloads/UKDA-6614-tab/tab/ukhls_w9/i_youth.tab")
 
     ## See spec(...) for full column specifications.
 
-``` r
-# You need to add between the quotation marks a full path to the required file on your computer.
-```
-
 Tabulate variables (10 points)
 ------------------------------
 
@@ -56,7 +51,6 @@ In the survey children were asked the following question: "Do you have a social 
 Tabulate three variables: children's gender, age (please use derived variables) and having an account on social media.
 
 ``` r
-# add your code here
 Tab1 <- d[,c("i_sex","i_age_dv","i_ypsocweb")]
 ```
 
@@ -66,7 +60,6 @@ Recode variables (10 points)
 We want to create a new binary variable for having an account on social media so that 1 means "yes", 0 means "no", and all missing values are coded as NA. We also want to recode gender into a new variable with the values "male" and "female" (this can be a character vector or a factor).
 
 ``` r
-# add your code here
 table(d$i_ypsocweb)
 ```
 
@@ -114,7 +107,6 @@ Calculate means (10 points)
 Produce code that calculates probabilities of having an account on social media (i.e. the mean of your new binary variable produced in the previous problem) by age and gender.
 
 ``` r
-# add your code here
 d.m <- d[d$i_sex == 1,]
 d.f <- d[d$i_sex == 2,]
 
@@ -183,7 +175,6 @@ Visualise results (20 points)
 Create a statistical graph (only one, but it can be faceted) illustrating your results (i.e. showing how the probability of having an account on social media changes with age and gender). Which type of statistical graph would be most appropriate for this?
 
 ``` r
-# add your code here
 library(ggplot2)
 ggplot(d, aes(x = i_age_dv, y = i_ypsocweb.r, fill = as.factor(gender))) +
   geom_bar(aes(y = (..count..)/sum(..count..))) + 

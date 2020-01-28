@@ -25,7 +25,7 @@ First, we need to read the data into R. For this assignment, I ask you to use da
 ```{r}
 library(tidyverse)
 # This attaches the tidyverse package. If you get an error here you need to install the package first. 
-Data <- read_tsv("")
+d <- read_tsv("/Users/jsn2817/Downloads/UKDA-6614-tab/tab/ukhls_w9/i_youth.tab")
 # You need to add between the quotation marks a full path to the required file on your computer.
 ```
 
@@ -37,7 +37,7 @@ Tabulate three variables: children's gender, age (please use derived variables) 
 
 ```{r}
 # add your code here
-
+Tab1 <- d[,c("i_sex","i_age_dv","i_ypsocweb")]
 ```
 
 ## Recode variables (10 points)
@@ -46,6 +46,22 @@ We want to create a new binary variable for having an account on social media so
 
 ```{r}
 # add your code here
+table(d$i_ypsocweb)
+table(d$i_sex)
+
+d$i_ypsocweb.r <- NA
+d$i_ypsocweb.r[d$i_ypsocweb == 1] <- 1
+d$i_ypsocweb.r[d$i_ypsocweb == 2] <- 0
+d$i_ypsocweb.r[d$i_ypsocweb == -9] <- NA
+
+table(d$i_ypsocweb.r)
+
+d$gender <- NA
+d$gender[d$i_sex == 1] <- "Male"
+d$gender[d$i_sex == 2] <- "Female"
+d$gender[d$i_sex == -9] <- NA
+
+table(d$gender)
 ```
 
 ## Calculate means (10 points)
@@ -54,11 +70,20 @@ Produce code that calculates probabilities of having an account on social media 
 
 ```{r}
 # add your code here
+d.m <- d[d$i_sex == 1,]
+d.f <- d[d$i_sex == 2,]
+
+prop.table(table(d$i_age_dv, d$i_ypsocweb.r))
+prop.table(table(d$gender, d$i_ypsocweb.r))
+prop.table(table(d.m$i_age_dv, d.m$i_ypsocweb.r))
+prop.table(table(d.f$i_age_dv, d.f$i_ypsocweb.r))
 ```
 
 ## Write short interpretation (10 points)
 
 Write two or three sentences interpreting your findings above.
+
+In general males are slightly less likely than females to have a social media account. Additionally, for both genders as they got older they were less likely not to have a social media account than before.
 
 ## Visualise results (20 points)
 
@@ -66,6 +91,11 @@ Create a statistical graph (only one, but it can be faceted) illustrating your r
 
 ```{r}
 # add your code here
+library(ggplot2)
+ggplot(d, aes(x = i_age_dv, y = i_ypsocweb.r, fill = as.factor(gender))) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) + 
+  labs(x = "Age", y  = "Probability of Social Media", fill = "Gender") +
+  facet_wrap(~ gender)
 ```
 
 ## Conclusion
